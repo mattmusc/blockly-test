@@ -25,22 +25,22 @@ class App {
     this.saveJsonBtn = document.getElementById('save-json-btn');
     this.jsonInput = document.getElementById('json-input');
 
-    this.genCodeBtn.addEventListener('click', this.genCodeHandler.bind(this))
-    this.saveJsonBtn.addEventListener('click', this.saveJsonHandler.bind(this))
-    this.jsonInput.addEventListener('change', this.fileInputHandler.bind(this))
+    this.genCodeBtn.addEventListener('click', this.generateCode.bind(this))
+    this.saveJsonBtn.addEventListener('click', this.saveJson.bind(this))
+    this.jsonInput.addEventListener('change', this.loadJson.bind(this))
   }
 
-  genCodeHandler() {
+  generateCode() {
     this.codeDiv.innerHTML = Blockly[this.lang].workspaceToCode(this.workspace);
   }
 
-  saveJsonHandler() {
+  saveJson() {
     const json = Blockly.serialization.workspaces.save(this.workspace);
     const blob = new Blob([JSON.stringify(json)]);
     downloadBlob(blob, 'block.json');
   }
 
-  fileInputHandler() {
+  loadJson() {
     const file = this.jsonInput.files[0];
     const reader = new FileReader();
     reader.addEventListener('load', (event) => {
