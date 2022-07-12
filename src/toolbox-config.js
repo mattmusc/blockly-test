@@ -1,4 +1,4 @@
-export const toolbox = {
+export const toolboxConfig = {
   'kind': 'flyoutToolbox',
   'contents': [
     {
