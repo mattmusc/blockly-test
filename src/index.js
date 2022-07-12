@@ -2,6 +2,7 @@ import * as Blockly from 'blockly';
 import 'blockly/blocks';
 import 'blockly/python';
 
+import './custom-blocks';
 import {toolboxConfig} from './toolbox-config';
 import {downloadBlob} from './utils';
 

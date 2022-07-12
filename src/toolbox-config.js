@@ -104,5 +104,15 @@ export const toolboxConfig = {
       'name': 'Functions',
       'custom': 'PROCEDURE',
     },
+    {
+      'kind': 'category',
+      'name': 'API Calls',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'call_print_api'
+        },
+      ]
+    },
   ]
 }
