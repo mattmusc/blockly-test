@@ -28,6 +28,8 @@ class App {
     this.genCodeBtn.addEventListener('click', this.generateCode.bind(this))
     this.saveJsonBtn.addEventListener('click', this.saveJson.bind(this))
     this.jsonInput.addEventListener('change', this.loadJson.bind(this))
+
+    this.workspace.addChangeListener(this.generateCode.bind(this));
   }
 
   generateCode() {
