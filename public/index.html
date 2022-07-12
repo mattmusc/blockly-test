@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Blockly Test</title>
+
+  <style>
+      html,
+      body {
+          font-family: sans-serif;
+          height: 100%;
+          margin: 0;
+      }
+
+      nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: max(2vh, 3rem);
+          padding: 0 1rem;
+      }
+
+      #wrapper {
+          height: calc(100% - max(2vh, 3rem));
+          display: grid;
+          grid-template: 2fr 1fr / auto;
+      }
+
+      @media (min-width: 1280px) {
+          #wrapper {
+              grid-template: auto / 2fr 1fr;
+          }
+      }
+
+      #code {
+          font-family: monospace;
+          padding: 1rem;
+      }
+  </style>
+
+</head>
+
+<body>
+
+<nav>
+  <h3>Blockly Test</h3>
+  <button id="blocklyButton">Generate Python</button>
+</nav>
+
+<div id="wrapper">
+  <div id='blocklyDiv'></div>
+  <pre id='code'></pre>
+</div>
+
+<script type='text/javascript' src='./index.js'></script>
+
+</body>
+
+</html>
