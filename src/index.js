@@ -3,53 +3,40 @@ import 'blockly/blocks';
 import 'blockly/python';
 
 import {toolboxConfig} from './toolbox-config';
+import {downloadBlob} from './utils';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const workspace = Blockly.inject('blocklyDiv', {
-    toolbox: toolboxConfig,
-    trashcan: true,
-  });
+class App {
+  lang = 'Python';
+  workspace = null;
+  genCodeBtn = null;
+  codeDiv = null;
+  saveJsonBtn = null;
 
-  const codeDiv = document.getElementById('code');
+  constructor() {
+    this.workspace = Blockly.inject('blocklyDiv', {
+      toolbox: toolboxConfig,
+      trashcan: true,
+    });
 
-  const lang = 'Python';
-  const genCodeBtn = document.getElementById('generateCode');
-  genCodeBtn.addEventListener('click', () => {
-    codeDiv.innerHTML = Blockly[lang].workspaceToCode(workspace);
-  })
+    this.genCodeBtn = document.getElementById('generateCode');
+    this.codeDiv = document.getElementById('code');
+    this.saveJsonBtn = document.getElementById('saveJSONButton');
 
-  const saveJsonBtn = document.getElementById('saveJSONButton');
-  saveJsonBtn.addEventListener('click', () => {
-    const json = Blockly.serialization.workspaces.save(workspace);
+    this.genCodeBtn.addEventListener('click', this.genCodeHandler.bind(this))
+    this.saveJsonBtn.addEventListener('click', this.saveJsonHandler.bind(this))
+  }
+
+  genCodeHandler() {
+    this.codeDiv.innerHTML = Blockly[this.lang].workspaceToCode(this.workspace);
+  }
+
+  saveJsonHandler() {
+    const json = Blockly.serialization.workspaces.save(this.workspace);
     const blob = new Blob([JSON.stringify(json)]);
     downloadBlob(blob, 'block.json');
-  });
-});
-
-function downloadBlob(blob, name = 'file') {
-  // Convert your blob into a Blob URL (a special url that points to an object in the browser's memory)
-  const blobUrl = URL.createObjectURL(blob);
-
-  // Create a link element
-  const link = document.createElement("a");
-
-  // Set link's href to point to the Blob URL
-  link.href = blobUrl;
-  link.download = name;
-
-  // Append link to the body
-  document.body.appendChild(link);
-
-  // Dispatch click event on the link
-  // This is necessary as link.click() does not work on the latest firefox
-  link.dispatchEvent(
-    new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-      view: window
-    })
-  );
-
-  // Remove link from body
-  document.body.removeChild(link);
+  }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  new App()
+});
