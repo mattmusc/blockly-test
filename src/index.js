@@ -12,19 +12,22 @@ class App {
   genCodeBtn = null;
   codeDiv = null;
   saveJsonBtn = null;
+  jsonInput = null;
 
   constructor() {
-    this.workspace = Blockly.inject('blocklyDiv', {
+    this.workspace = Blockly.inject('blockly-div', {
       toolbox: toolboxConfig,
       trashcan: true,
     });
 
-    this.genCodeBtn = document.getElementById('generateCode');
+    this.genCodeBtn = document.getElementById('generate-code-btn');
     this.codeDiv = document.getElementById('code');
-    this.saveJsonBtn = document.getElementById('saveJSONButton');
+    this.saveJsonBtn = document.getElementById('save-json-btn');
+    this.jsonInput = document.getElementById('json-input');
 
     this.genCodeBtn.addEventListener('click', this.genCodeHandler.bind(this))
     this.saveJsonBtn.addEventListener('click', this.saveJsonHandler.bind(this))
+    this.jsonInput.addEventListener('change', this.fileInputHandler.bind(this))
   }
 
   genCodeHandler() {
@@ -35,6 +38,16 @@ class App {
     const json = Blockly.serialization.workspaces.save(this.workspace);
     const blob = new Blob([JSON.stringify(json)]);
     downloadBlob(blob, 'block.json');
+  }
+
+  fileInputHandler() {
+    const file = this.jsonInput.files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+      const json = JSON.parse(`${event.target.result}`);
+      Blockly.serialization.workspaces.load(json, this.workspace);
+    });
+    reader.readAsText(file);
   }
 }
 
