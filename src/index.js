@@ -9,7 +9,6 @@ import {downloadBlob} from './utils';
 class App {
   lang = 'Python';
   workspace = null;
-  genCodeBtn = null;
   codeDiv = null;
   saveJsonBtn = null;
   jsonInput = null;
@@ -20,12 +19,10 @@ class App {
       trashcan: true,
     });
 
-    this.genCodeBtn = document.getElementById('generate-code-btn');
     this.codeDiv = document.getElementById('code');
     this.saveJsonBtn = document.getElementById('save-json-btn');
     this.jsonInput = document.getElementById('json-input');
 
-    this.genCodeBtn.addEventListener('click', this.generateCode.bind(this))
     this.saveJsonBtn.addEventListener('click', this.saveJson.bind(this))
     this.jsonInput.addEventListener('change', this.loadJson.bind(this))
 
